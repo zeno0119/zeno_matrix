@@ -25,3 +25,21 @@ fn test_add_operands_error() {
     let b = Matrix::zeros(vec![5, 5]);
     let res = a + b;
 }
+
+#[test]
+fn test_linspace() {
+    let res = Matrix::linspace(0.0, 2.0, 200);
+    assert_eq!(res.size(), 201);
+}
+
+#[test]
+fn test_linspace_reverse() {
+    let res = Matrix::linspace(2.0, 0.0, 200);
+    println!("{:?}", res)
+}
+
+#[test]
+fn test_sin() {
+    let res = Matrix::linspace(0.0, 2.0, 200).sin();
+    assert_eq!(res.size(), 201);
+}
