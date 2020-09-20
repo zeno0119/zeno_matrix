@@ -43,3 +43,18 @@ fn test_sin() {
     let res = Matrix::linspace(0.0, 2.0, 200).sin();
     assert_eq!(res.size(), 201);
 }
+
+#[test]
+#[should_panic(expected = "Matrix form is not correct")]
+fn panic_reshape() {
+    let res = Matrix::zeros(vec![5, 5]);
+    let res = res.reshape(&vec![4, 6]);
+}
+
+#[test]
+fn test_t(){
+    let res = Matrix::linspace(0.0, 2.0, 200);
+    let t = res.t();
+    let a = res.reshape(&vec![201, 1]) + t;
+    assert_eq!(a.size(), 201 * 201);
+}
