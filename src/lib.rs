@@ -1,3 +1,4 @@
+mod matrix_ops;
 mod generations;
 mod elementary_functions;
 mod operations;
