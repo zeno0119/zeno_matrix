@@ -24,4 +24,12 @@ impl Matrix {
         }
         return res;
     }
+
+    pub fn function(&self, f: fn(x: f64) -> f64) -> Matrix {
+        let mut data = self.data.clone();
+        for i in 0..data.len() {
+            data[i] = f(data[i]);
+        }
+        return Matrix{data, dim: self.dim.clone(), size: self.size.clone()};
+    }
 }
