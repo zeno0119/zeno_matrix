@@ -1,4 +1,3 @@
-use std::ops::Deref;
 use rand::prelude::*;
 
 type Matrix = super::super::Matrix<f64>;

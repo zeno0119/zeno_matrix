@@ -1,4 +1,3 @@
-use crate::Dimension;
 
 type Matrix<T> = super::Matrix<T>;
 

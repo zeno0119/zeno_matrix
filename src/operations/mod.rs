@@ -10,7 +10,6 @@ where T: std::ops::Add<Output = T> + std::clone::Clone
         let validate = Matrix::validate_dim_match(&self, &other);
         if validate.is_err() { panic!(validate.err().unwrap()); }
 
-        let validate = validate.unwrap();
         let dim = validate.unwrap();
         let size: usize = Matrix::<T>::size_init(&dim);
         let mut data: Vec<T> = Vec::new();
@@ -31,7 +30,6 @@ where T: std::ops::Sub<Output = T> + std::clone::Clone
         let validate = Matrix::validate_dim_match(&self, &other);
         if validate.is_err() { panic!(validate.err().unwrap()); }
 
-        let validate = validate.unwrap();
         let dim = validate.unwrap();
         let size = Matrix::<T>::size_init(&dim);
         let mut data: Vec<T> = Vec::new();
@@ -53,7 +51,6 @@ where T: std::ops::Mul<Output = T> + std::clone::Clone
         let validate = Matrix::validate_dim_match(&self, &other);
         if validate.is_err() { panic!(validate.err().unwrap()); }
 
-        let validate = validate.unwrap();
         let dim = validate.unwrap();
         let size = Matrix::<T>::size_init(&dim);
         let mut data: Vec<T> = Vec::new();

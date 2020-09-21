@@ -29,12 +29,12 @@ impl<T> Matrix<T> {
         return res;
     }
 
-    fn validate_dim_match(a: &Matrix<T>, b: &Matrix<T>) -> Result<Option<Dimension>, String>{
+    fn validate_dim_match(a: &Matrix<T>, b: &Matrix<T>) -> Result<Dimension, String>{
         if a.dim.len() != 2 ||  b.dim.len() != 2 {
             return Err("Dimension is not Correct".to_string())
         }
 
-        let mut res = Ok(Some(a.dim.clone()));
+        let mut res = Ok(a.dim.clone());
 
         for i in 0..a.dim.len() {
             if a.dim[i] != b.dim[i] {
@@ -42,7 +42,7 @@ impl<T> Matrix<T> {
                     return Err(format!("operands could not be broadcast together with shapes {:?}, {:?}", a.dim, b.dim).to_string());
                 }
                 else if a.dim[i] != 1 || b.dim[i] != 1{
-                    res = Ok(Some(vec![max(a.dim[0], b.dim[0]), max(a.dim[1], b.dim[1])]))
+                    res = Ok(vec![max(a.dim[0], b.dim[0]), max(a.dim[1], b.dim[1])])
                 }
             }
         }
