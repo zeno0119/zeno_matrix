@@ -1,4 +1,4 @@
-type Matrix = super::Matrix;
+type Matrix = super::super::Matrix<f64>;
 
 impl Matrix {
     pub fn sin(&self) -> Matrix{

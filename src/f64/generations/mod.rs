@@ -1,6 +1,6 @@
 use std::ops::Deref;
 
-type Matrix = super::Matrix;
+type Matrix = super::super::Matrix<f64>;
 type Dimension = Vec<usize>;
 
 impl Matrix {
