@@ -15,10 +15,10 @@ impl <T: std::clone::Clone> super::Matrix<T> {
         }
         let dim = vec![self.dim[1], self.dim[0]];
         let size = Matrix::<T>::size_init(&dim);
-        let mut data = Vec::<T>::new();
+        let mut data = Vec::<T>::with_capacity(size);
+
         for i in 0..self.size {
-            println!("{:}, {:?}", i % dim[1] * dim[0] + i / dim[0] * dim[1], i);
-            data[i % dim[1] * dim[0] + i / dim[0] * dim[1]] = self.data[i].clone();
+            data.push(self.data[(i % dim[0]) * dim[1] + i / dim[0]].clone());
         }
         return Matrix{data, size, dim};
     }
