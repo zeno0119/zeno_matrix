@@ -53,6 +53,12 @@ fn panic_reshape() {
 }
 
 #[test]
+fn reshape() {
+    let res = Matrixf64::zeros(vec![4, 6]);
+    let res = res.reshape(&vec![6, 4]);
+}
+
+#[test]
 fn test_t(){
     let res = Matrixf64::linspace(0.0, 2.0, 200);
     let t = res.t();
@@ -63,7 +69,7 @@ fn test_t(){
 #[test]
 fn test_rand() {
     let res = Matrixf64::rand(vec![5, 5], 0.0, 1.0);
-    println!("{:?}", res);
+    assert_eq!(res.size(), 25);
 }
 
 #[test]
