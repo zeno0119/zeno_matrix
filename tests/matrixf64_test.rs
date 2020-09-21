@@ -77,3 +77,11 @@ fn test_rand() {
 fn test_panic_rand() {
     let res = Matrixf64::rand(vec![5, 5], 1.0, 0.0);
 }
+
+#[test]
+fn transpose2() {
+    let res = Matrixf64::rand(vec![5, 6], 0.0, 1.0);
+    let t = res.t();
+    let t = t.t();
+    assert_eq!(res, t)
+}
