@@ -59,3 +59,15 @@ fn test_t(){
     let a = res.reshape(&vec![201, 1]) + t;
     assert_eq!(a.size(), 201 * 201);
 }
+
+#[test]
+fn test_rand() {
+    let res = Matrixf64::rand(vec![5, 5], 0.0, 1.0);
+    println!("{:?}", res);
+}
+
+#[test]
+#[should_panic(expected = "end Must be larger than start")]
+fn test_panic_rand() {
+    let res = Matrixf64::rand(vec![5, 5], 1.0, 0.0);
+}
