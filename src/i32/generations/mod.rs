@@ -1,4 +1,3 @@
-use std::ops::Deref;
 
 type Matrix = super::super::Matrix<i32>;
 type Dimension = Vec<usize>;
