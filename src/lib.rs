@@ -1,7 +1,7 @@
 mod matrix_ops;
-mod generations;
-mod elementary_functions;
+mod f64;
 mod operations;
+mod i32;
 
 use std::cmp::max;
 use std::cmp;
@@ -9,16 +9,14 @@ use std::cmp;
 type Dimension = Vec<usize>;
 
 #[derive(Debug)]
-pub struct Matrix<T: Default = f64>
-    where
-        T: std::ops::Add + std::ops::Div + std::ops::Mul + std::ops::Neg + std::cmp::PartialEq + std::ops::Sub
+pub struct Matrix<T>
 {
     dim: Dimension,
     data: Vec<T>,
     size: usize
 }
 
-impl Matrix {
+impl<T> Matrix<T> {
     pub fn size(self) -> usize {
         return self.size;
     }
@@ -31,7 +29,7 @@ impl Matrix {
         return res;
     }
 
-    fn validate_dim_match(a: &Matrix, b: &Matrix) -> Result<Option<Dimension>, String>{
+    fn validate_dim_match(a: &Matrix<T>, b: &Matrix<T>) -> Result<Option<Dimension>, String>{
         if a.dim.len() != 2 ||  b.dim.len() != 2 {
             return Err("Dimension is not Correct".to_string())
         }

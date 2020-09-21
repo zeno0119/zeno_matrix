@@ -1,60 +1,73 @@
 use zeno_matrix::Matrix;
 
+type Matrixf64 = Matrix::<f64>;
 #[test]
 fn test_add_non_broadcast() {
-    let a = Matrix::zeros(vec![5, 5]);
-    let b = Matrix::zeros(vec![5, 5]);
+    let a = Matrixf64::zeros(vec![5, 5]);
+    let b = Matrixf64::zeros(vec![5, 5]);
     let res = a + b;
-    let c = Matrix::zeros(vec![5, 5]);
+    let c = Matrixf64::zeros(vec![5, 5]);
     assert_eq!(c, res);
 }
 
 #[test]
 fn test_add_with_broadcast() {
-    let a = Matrix::zeros(vec![5, 1]);
-    let b = Matrix::zeros(vec![1, 5]);
+    let a = Matrixf64::zeros(vec![5, 1]);
+    let b = Matrixf64::zeros(vec![1, 5]);
     let res = a + b;
-    let c = Matrix::zeros(vec![5, 5]);
+    let c = Matrixf64::zeros(vec![5, 5]);
     assert_eq!(c, res);
 }
 
 #[test]
 #[should_panic(expected = "operands could not be broadcast together with shapes [5, 4], [5, 5]")]
 fn test_add_operands_error() {
-    let a = Matrix::zeros(vec![5, 4]);
-    let b = Matrix::zeros(vec![5, 5]);
+    let a = Matrixf64::zeros(vec![5, 4]);
+    let b = Matrixf64::zeros(vec![5, 5]);
     let res = a + b;
 }
 
 #[test]
 fn test_linspace() {
-    let res = Matrix::linspace(0.0, 2.0, 200);
+    let res = Matrixf64::linspace(0.0, 2.0, 200);
     assert_eq!(res.size(), 201);
 }
 
 #[test]
 fn test_linspace_reverse() {
-    let res = Matrix::linspace(2.0, 0.0, 200);
+    let res = Matrixf64::linspace(2.0, 0.0, 200);
     println!("{:?}", res)
 }
 
 #[test]
 fn test_sin() {
-    let res = Matrix::linspace(0.0, 2.0, 200).sin();
+    let res = Matrixf64::linspace(0.0, 2.0, 200).sin();
     assert_eq!(res.size(), 201);
 }
 
 #[test]
 #[should_panic(expected = "Matrix form is not correct")]
 fn panic_reshape() {
-    let res = Matrix::zeros(vec![5, 5]);
+    let res = Matrixf64::zeros(vec![5, 5]);
     let res = res.reshape(&vec![4, 6]);
 }
 
 #[test]
 fn test_t(){
-    let res = Matrix::linspace(0.0, 2.0, 200);
+    let res = Matrixf64::linspace(0.0, 2.0, 200);
     let t = res.t();
     let a = res.reshape(&vec![201, 1]) + t;
     assert_eq!(a.size(), 201 * 201);
+}
+
+#[test]
+fn test_rand() {
+    let res = Matrixf64::rand(vec![5, 5], 0.0, 1.0);
+    println!("{:?}", res);
+}
+
+#[test]
+#[should_panic(expected = "end Must be larger than start")]
+fn test_panic_rand() {
+    let res = Matrixf64::rand(vec![5, 5], 1.0, 0.0);
 }
