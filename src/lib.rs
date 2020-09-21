@@ -1,3 +1,4 @@
+mod matrix_ops;
 mod f64;
 mod operations;
 mod i32;
