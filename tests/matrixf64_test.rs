@@ -46,8 +46,8 @@ mod operations {
     fn transpose1() {
         let res = Matrixf64::linspace(0.0, 2.0, 200);
         let t = res.t();
-        let a = res.reshape(&vec![201, 1]) + t;
-        assert_eq!(a.size(), 201 * 201);
+        let a = res.reshape(&vec![200, 1]) + t;
+        assert_eq!(a.size(), 200 * 200);
     }
 
     #[test]
@@ -63,33 +63,34 @@ mod operations {
         let res = Matrixf64::linspace(0.0, 2.0, 200);
         let t = res.t();
         let t = t.t();
-        let a = res.reshape(&vec![201, 1]);
+        let a = res.reshape(&vec![200, 1]);
         assert_eq!(a, t);
     }
 }
 
 mod generations {
     type Matrixf64 = super::Matrix<f64>;
+
     #[test]
     fn test_linspace() {
         let res = Matrixf64::linspace(0.0, 2.0, 200);
-        assert_eq!(res.size(), 201);
+        assert_eq!(res.size(), 200);
     }
 
     #[test]
     fn test_linspace_reverse() {
         let res = Matrixf64::linspace(2.0, 0.0, 200);
-        assert_eq!(res.size(), 201);
+        assert_eq!(res.size(), 200);
     }
 }
 
-mod typed_functions{
+mod typed_functions {
     type Matrixf64 = super::Matrix<f64>;
 
     #[test]
     fn test_sin() {
         let res = Matrixf64::linspace(0.0, 2.0, 200).sin();
-        assert_eq!(res.size(), 201);
+        assert_eq!(res.size(), 200);
     }
 
     #[test]

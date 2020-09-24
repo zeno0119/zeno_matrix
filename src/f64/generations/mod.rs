@@ -14,10 +14,10 @@ impl Matrix {
     }
 
     pub fn linspace(start: f64, stop: f64, num: usize) -> Matrix {
-        let mut res = Matrix::zeros(vec![num + 1]);
+        let mut res = Matrix::zeros(vec![num]);
 
         for i in 0..res.size {
-            res.data[i] = start + (stop - start) / num as f64 * i as f64;
+            res.data[i] = start + (stop - start) / (num - 1) as f64 * i as f64;
         }
 
         return res
