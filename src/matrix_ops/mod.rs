@@ -3,7 +3,7 @@ type Matrix<T> = super::Matrix<T>;
 impl<T: std::clone::Clone> super::Matrix<T> {
     pub fn t(&self) -> Self {
         // transpose Matrix
-        // 1次元のベクトルは暗黙的に行ベクトルとして考えて転置
+        // 1次元のベクトルは暗黙的に列ベクトルとして考えて転置
         if self.dim.len() != 2 && self.dim.len() != 1 {
             panic!("Dimension is not suitable for this function");
         }
@@ -35,15 +35,14 @@ impl<T: std::clone::Clone> super::Matrix<T> {
         if a.dim.len() != 2 || b.dim.len() != 2 {
             panic!("Dimension is need to be 2")
         }
-        if a.dim[0] != b.dim[1] {
-            panic!("left dim[0] must be equal to right dim[1]")
+        if a.dim[1] != b.dim[0] {
+            panic!("left dim[1] must be equal to right dim[0]")
         }
-        let mut data: Vec<T> = vec![Default::default(); a.dim[1] * b.dim[0]];
-        let dim = vec![b.dim[0], a.dim[1]];
+        let mut data: Vec<T> = vec![Default::default(); a.dim[0] * b.dim[1]];
+        let dim = vec![a.dim[0], b.dim[1]];
 
-        let left = a.duplicate(b.dim[0]);
-        let right = b.repeat(a.dim[1]);
-
+        let left = a.repeat(b.dim[1]);
+        let right = b.duplicate(a.dim[0]);
         let res = {
             let mut res = Vec::<T>::new();
             for i in 0..left.len() {
@@ -53,10 +52,10 @@ impl<T: std::clone::Clone> super::Matrix<T> {
         };
         for i in 0..data.len() {
             data[i] = {
-                let offset = i % b.dim[1] + i / a.dim[0] * b.dim[0] * b.dim[1];
+                let offset = i % a.dim[0] + (i / a.dim[0]) * a.dim[0] * a.dim[1];
                 let mut r:T = Default::default();
-                for j in 0..a.dim[0] {
-                    r = r + res[offset.clone() + j * b.dim[0]].clone();
+                for j in 0..a.dim[1] {
+                    r = r + res[offset.clone() + j * a.dim[0]].clone();
                 }
                 r
             };

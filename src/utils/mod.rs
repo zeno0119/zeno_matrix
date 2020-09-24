@@ -19,4 +19,28 @@ where T: std::clone::Clone
 
         return data;
     }
+
+    pub(crate) fn dimensional_broadcast(a: Matrix<T>, b: Matrix<T>) -> (Matrix<T>, Matrix<T>){
+        let mut b = if a.dim.len() > b.dim.len(){
+            let mut dim = b.dim.clone();
+            dim.append(&mut vec![1;a.dim.len() - b.dim.len()]);
+            Matrix{data: b.data.clone(), dim, size: b.size.clone()}
+        }else {
+            b
+        };
+
+        let mut a = if b.dim.len() > a.dim.len(){
+            let mut dim = a.dim.clone();
+            dim.append(&mut vec![1;b.dim.len() - a.dim.len()]);
+            Matrix{data: a.data.clone(), dim, size: a.size.clone()}
+        }else {
+            a
+        };
+        return (a, b);
+    }
+
+    pub fn vec(&self) -> Vec<T>{
+        self.data.clone()
+    }
+
 }
