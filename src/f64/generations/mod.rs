@@ -10,7 +10,7 @@ impl Matrix {
         for i in 0..res.size {
             res.data[i] = start + i as f64 * step;
         }
-        return res;
+        res
     }
 
     pub fn linspace(start: f64, stop: f64, num: usize) -> Matrix {
@@ -20,16 +20,14 @@ impl Matrix {
             res.data[i] = start + (stop - start) / (num - 1) as f64 * i as f64;
         }
 
-        return res
+        res
     }
 
     pub fn zeros(d: Dimension) -> Matrix {
-        let res = Matrix{data: vec![0.0; Matrix::size_init(&d)], size: Matrix::size_init(&d), dim: d.clone()};
-        return res
+        Matrix{data: vec![0.0; Matrix::size_init(&d)], size: Matrix::size_init(&d), dim: d.clone()}
     }
     pub fn ones(d: Dimension) -> Matrix {
-        let res = Matrix{data: vec![1.0; Matrix::size_init(&d)], size: Matrix::size_init(&d), dim: d.clone()};
-        return res
+        Matrix{data: vec![1.0; Matrix::size_init(&d)], size: Matrix::size_init(&d), dim: d.clone()}
     }
 
     pub fn rand(d: Dimension, start: f64, end: f64) -> Matrix {
@@ -39,13 +37,13 @@ impl Matrix {
         let size = Matrix::size_init(&d);
         let mut data = vec![0.0; size];
         let mut rng = rand::thread_rng();
-        for i in 0..data.len() {
-            data[i] = (rng.gen::<f64>() + start) / (1.0 + start) * end;
+        for i in &mut data {
+            *i = (rng.gen::<f64>() + start) / (1.0 + start) * end;
         }
-        return Matrix{size, data, dim: d};
+        Matrix{size, data, dim: d}
     }
 
     pub fn mat(f: f64) -> Matrix{
-        return Matrix{data: vec![f], dim: vec![1], size: 1};
+        Matrix{data: vec![f], dim: vec![1], size: 1}
     }
 }

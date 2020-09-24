@@ -19,15 +19,15 @@ pub struct Matrix<T>
 
 impl<T> Matrix<T> {
     pub fn size(self) -> usize {
-        return self.size;
+        self.size
     }
 
-    fn size_init(d: &Dimension) -> usize{
+    fn size_init(d: &[usize]) -> usize{
         let mut res = 1;
         for d_el in d {
             res *= *d_el
         }
-        return res;
+        res
     }
 
     fn validate_dim_match(a: &Matrix<T>, b: &Matrix<T>) -> Result<Dimension, String>{
@@ -40,20 +40,20 @@ impl<T> Matrix<T> {
         for i in 0..a.dim.len() {
             if a.dim[i] != b.dim[i] {
                 if a.dim[i] != 1 && b.dim[i] != 1{
-                    return Err(format!("operands could not be broadcast together with shapes {:?}, {:?}", a.dim, b.dim).to_string());
+                    return Err(format!("operands could not be broadcast together with shapes {:?}, {:?}", a.dim, b.dim));
                 }
                 else if a.dim[i] != 1 || b.dim[i] != 1{
                     res = Ok(vec![max(a.dim[0], b.dim[0]), max(a.dim[1], b.dim[1])])
                 }
             }
         }
-        return res;
+        res
     }
 
-    fn get_index_on_arithmetic_ops (i: usize, self_dim: &Dimension, other_dim: &Dimension) ->((usize, usize), (usize, usize)) {
+    fn get_index_on_arithmetic_ops (i: usize, self_dim: &[usize], other_dim: &[usize]) ->((usize, usize), (usize, usize)) {
         let index_self = (cmp::min(i % self_dim[0], self_dim[0] - 1) as usize, cmp::min(i / self_dim[1], self_dim[1] - 1) as usize);
         let index_other = (cmp::min(i % other_dim[0], other_dim[0] - 1) as usize, cmp::min(i / other_dim[1], other_dim[1] - 1) as usize);
-        return (index_self, index_other);
+        (index_self, index_other)
     }
 }
 

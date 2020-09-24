@@ -83,7 +83,7 @@ where T:std::cmp::PartialEq
         for i in 0..self.data.len() {
             if self.data[i] != other.data[i] { return false; }
         }
-        return true;
+        true
     }
 }
 
