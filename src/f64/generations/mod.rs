@@ -44,4 +44,8 @@ impl Matrix {
         }
         return Matrix{size, data, dim: d};
     }
+
+    pub fn mat(f: f64) -> Matrix{
+        return Matrix{data: vec![f], dim: vec![1], size: 1};
+    }
 }
