@@ -1,6 +1,8 @@
-mod generations;
-mod elementary_functions;
+mod utils;
+mod matrix_ops;
+mod f64;
 mod operations;
+mod i32;
 
 use std::cmp::max;
 use std::cmp;
@@ -8,16 +10,14 @@ use std::cmp;
 type Dimension = Vec<usize>;
 
 #[derive(Debug)]
-pub struct Matrix<T: Default = f64>
-    where
-        T: std::ops::Add + std::ops::Div + std::ops::Mul + std::ops::Neg + std::cmp::PartialEq + std::ops::Sub
+pub struct Matrix<T>
 {
     dim: Dimension,
     data: Vec<T>,
     size: usize
 }
 
-impl Matrix {
+impl<T> Matrix<T> {
     pub fn size(self) -> usize {
         return self.size;
     }
@@ -30,12 +30,12 @@ impl Matrix {
         return res;
     }
 
-    fn validate_dim_match(a: &Matrix, b: &Matrix) -> Result<Option<Dimension>, String>{
+    fn validate_dim_match(a: &Matrix<T>, b: &Matrix<T>) -> Result<Dimension, String>{
         if a.dim.len() != 2 ||  b.dim.len() != 2 {
             return Err("Dimension is not Correct".to_string())
         }
 
-        let mut res = Ok(Some(a.dim.clone()));
+        let mut res = Ok(a.dim.clone());
 
         for i in 0..a.dim.len() {
             if a.dim[i] != b.dim[i] {
@@ -43,7 +43,7 @@ impl Matrix {
                     return Err(format!("operands could not be broadcast together with shapes {:?}, {:?}", a.dim, b.dim).to_string());
                 }
                 else if a.dim[i] != 1 || b.dim[i] != 1{
-                    res = Ok(Some(vec![max(a.dim[0], b.dim[0]), max(a.dim[1], b.dim[1])]))
+                    res = Ok(vec![max(a.dim[0], b.dim[0]), max(a.dim[1], b.dim[1])])
                 }
             }
         }
