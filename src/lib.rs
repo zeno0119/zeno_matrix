@@ -1,3 +1,4 @@
+mod utils;
 mod matrix_ops;
 mod f64;
 mod operations;

@@ -105,3 +105,22 @@ mod typed_functions {
         let res = Matrixf64::rand(vec![5, 5], 1.0, 0.0);
     }
 }
+
+mod matrix_ops {
+    type Matrixf64 = super::Matrix<f64>;
+    #[test]
+    fn dot() {
+        let a = Matrixf64::ones(vec![10, 5]);
+        let b = Matrixf64::ones(vec![4, 10]);
+        let res = super::Matrix::dot(&a, &b);
+        println!("{:?}", res);
+    }
+
+    #[test]
+    fn dot2() {
+        let a = Matrixf64::linspace(0.0, 1.0, 5).reshape(&vec![5, 1]);
+        let b = Matrixf64::linspace(0.0, 1.0, 5).reshape(&vec![1, 5]);
+        let res = super::Matrix::dot(&a, &b);
+        println!("{:?}", res);
+    }
+}
