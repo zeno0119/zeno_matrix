@@ -7,15 +7,18 @@ where T: std::ops::Add<Output = T> + std::clone::Clone
 {
     type Output = Self;
     fn add(self, other: Self) -> Matrix<T>{
-        let validate = Matrix::validate_dim_match(&self, &other);
+        let dim_broadcast = Matrix::dimensional_broadcast(self, other);
+        let _self = dim_broadcast.0;
+        let other = dim_broadcast.1;
+        let validate = Matrix::validate_dim_match(&_self, &other);
         if validate.is_err() { panic!(validate.err().unwrap()); }
 
         let dim = validate.unwrap();
         let size: usize = Matrix::<T>::size_init(&dim);
         let mut data: Vec<T> = Vec::new();
         for i in 0..size {
-            let index = Matrix::<T>::get_index_on_arithmetic_ops(i, &self.dim, &other.dim);
-            data.push(self.data[(index.0).1 * self.dim[0] + (index.0).0].clone() + other.data[(index.1).1 * other.dim[0] + (index.1).0].clone());
+            let index = Matrix::<T>::get_index_on_arithmetic_ops(i, &_self.dim, &other.dim);
+            data.push(_self.data[(index.0).1 * _self.dim[0] + (index.0).0].clone() + other.data[(index.1).1 * other.dim[0] + (index.1).0].clone());
         }
 
         Matrix{data, size, dim}
@@ -27,15 +30,18 @@ where T: std::ops::Sub<Output = T> + std::clone::Clone
 {
     type Output = Self;
     fn sub(self, other: Self) -> Matrix<T>{
-        let validate = Matrix::validate_dim_match(&self, &other);
+        let dim_broadcast = Matrix::dimensional_broadcast(self, other);
+        let _self = dim_broadcast.0;
+        let other = dim_broadcast.1;
+        let validate = Matrix::validate_dim_match(&_self, &other);
         if validate.is_err() { panic!(validate.err().unwrap()); }
 
         let dim = validate.unwrap();
         let size = Matrix::<T>::size_init(&dim);
         let mut data: Vec<T> = Vec::new();
         for i in 0..size {
-            let index = Matrix::<T>::get_index_on_arithmetic_ops(i, &self.dim, &other.dim);
-            data.push(self.data[(index.0).1 * self.dim[0] + (index.0).0].clone() - other.data[(index.1).1 * other.dim[0] + (index.1).0].clone());
+            let index = Matrix::<T>::get_index_on_arithmetic_ops(i, &_self.dim, &other.dim);
+            data.push(_self.data[(index.0).1 * _self.dim[0] + (index.0).0].clone() - other.data[(index.1).1 * other.dim[0] + (index.1).0].clone());
         }
 
         Matrix{data, size, dim}
@@ -48,15 +54,18 @@ where T: std::ops::Mul<Output = T> + std::clone::Clone
     //Hadamard product
     type Output = Self;
     fn mul(self, other:Self) -> Matrix<T>{
-        let validate = Matrix::validate_dim_match(&self, &other);
+        let dim_broadcast = Matrix::dimensional_broadcast(self, other);
+        let _self = dim_broadcast.0;
+        let other = dim_broadcast.1;
+        let validate = Matrix::validate_dim_match(&_self, &other);
         if validate.is_err() { panic!(validate.err().unwrap()); }
 
         let dim = validate.unwrap();
         let size = Matrix::<T>::size_init(&dim);
         let mut data: Vec<T> = Vec::new();
         for i in 0..size {
-            let index = Matrix::<T>::get_index_on_arithmetic_ops(i, &self.dim, &other.dim);
-            data.push(self.data[(index.0).1 * self.dim[0] + (index.0).0].clone() * other.data[(index.1).1 * other.dim[0] + (index.1).0].clone());
+            let index = Matrix::<T>::get_index_on_arithmetic_ops(i, &_self.dim, &other.dim);
+            data.push(_self.data[(index.0).1 * _self.dim[0] + (index.0).0].clone() * other.data[(index.1).1 * other.dim[0] + (index.1).0].clone());
         }
 
         Matrix{data, size, dim}
