@@ -110,8 +110,8 @@ mod matrix_ops {
     type Matrixf64 = super::Matrix<f64>;
     #[test]
     fn dot() {
-        let a = Matrixf64::ones(vec![10, 5]);
-        let b = Matrixf64::ones(vec![4, 10]);
+        let a = Matrixf64::ones(vec![3, 2]);
+        let b = Matrixf64::ones(vec![2, 4]);
         let res = super::Matrix::dot(&a, &b);
         println!("{:?}", res);
     }
