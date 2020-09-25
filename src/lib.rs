@@ -57,3 +57,12 @@ impl<T> Matrix<T> {
     }
 }
 
+impl<T: std::clone::Clone> Clone for Matrix<T> {
+    fn clone(&self) -> Self {
+        Matrix{
+            dim: self.dim.to_vec(),
+            data: self.data.to_vec(),
+            size: self.size.clone()
+        }
+    }
+}
