@@ -66,7 +66,8 @@ mod typed_functions {
 
     #[test]
     fn test_rand() {
-        let res = Matrixf64::rand(&[5, 5], 0.0, 1.0);
+        let res = Matrixf64::rand(&[5, 5], -1.0, 1.0);
+        println!("{:?}", res);
         assert_eq!(res.size(), 25);
     }
 
