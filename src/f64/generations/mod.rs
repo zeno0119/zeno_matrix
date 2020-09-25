@@ -1,51 +1,49 @@
 use rand::prelude::*;
 
 type Matrix = super::super::Matrix<f64>;
-type Dimension = Vec<usize>;
+type Dimension = [usize];
 
 impl Matrix {
     pub fn arange (start: f64, stop: f64, step: f64) -> Matrix {
         let size = ((stop - start) / step) as usize;
-        let mut res = Matrix::zeros(vec![size]);
+        let mut res = Matrix::zeros(&[size]);
         for i in 0..res.size {
             res.data[i] = start + i as f64 * step;
         }
-        return res;
+        res
     }
 
     pub fn linspace(start: f64, stop: f64, num: usize) -> Matrix {
-        let mut res = Matrix::zeros(vec![num]);
+        let mut res = Matrix::zeros(&[num]);
 
         for i in 0..res.size {
             res.data[i] = start + (stop - start) / (num - 1) as f64 * i as f64;
         }
 
-        return res
+        res
     }
 
-    pub fn zeros(d: Dimension) -> Matrix {
-        let res = Matrix{data: vec![0.0; Matrix::size_init(&d)], size: Matrix::size_init(&d), dim: d.clone()};
-        return res
+    pub fn zeros(d: &Dimension) -> Matrix {
+        Matrix{data: vec![0.0; Matrix::size_init(&d)], size: Matrix::size_init(&d), dim: d.to_owned()}
     }
-    pub fn ones(d: Dimension) -> Matrix {
-        let res = Matrix{data: vec![1.0; Matrix::size_init(&d)], size: Matrix::size_init(&d), dim: d.clone()};
-        return res
+    pub fn ones(d: &Dimension) -> Matrix {
+        Matrix{data: vec![1.0; Matrix::size_init(&d)], size: Matrix::size_init(&d), dim: d.to_owned()}
     }
 
-    pub fn rand(d: Dimension, start: f64, end: f64) -> Matrix {
+    pub fn rand(d: &Dimension, start: f64, end: f64) -> Matrix {
         if start > end {
             panic!("end Must be larger than start");
         }
         let size = Matrix::size_init(&d);
         let mut data = vec![0.0; size];
         let mut rng = rand::thread_rng();
-        for i in 0..data.len() {
-            data[i] = (rng.gen::<f64>() + start) / (1.0 + start) * end;
+        for i in &mut data {
+            *i = (rng.gen::<f64>() + start) / (1.0 + start) * end;
         }
-        return Matrix{size, data, dim: d};
+        Matrix{size, data, dim: d.to_owned()}
     }
 
     pub fn mat(f: f64) -> Matrix{
-        return Matrix{data: vec![f], dim: vec![1], size: 1};
+        Matrix{data: vec![f], dim: vec![1], size: 1}
     }
 }

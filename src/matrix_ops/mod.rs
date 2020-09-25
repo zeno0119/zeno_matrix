@@ -18,14 +18,14 @@ impl<T: std::clone::Clone> super::Matrix<T> {
         for i in 0..self.size {
             data.push(self.data[(i % dim[0]) * dim[1] + i / dim[0]].clone());
         }
-        return Matrix { data, size, dim };
+        Matrix { data, size, dim }
     }
 
-    pub fn reshape(&self, dim: &Vec<usize>) -> Self {
-        if self.size != Matrix::<T>::size_init(dim) {
+    pub fn reshape(&self, dim: &[usize]) -> Self {
+        if self.size != Matrix::<T>::size_init(&dim.to_vec()) {
             panic!("Matrix form is not correct");
         }
-        return Matrix { data: self.data.clone(), dim: dim.clone(), size: self.size };
+        Matrix { data: self.data.clone(), dim: dim.to_owned(), size: self.size }
     }
 
     pub fn dot(a: &Matrix<T>, b: &Matrix<T>) -> Matrix<T>
@@ -50,16 +50,16 @@ impl<T: std::clone::Clone> super::Matrix<T> {
             }
             res
         };
-        for i in 0..data.len() {
-            data[i] = {
+        for (i, datum) in data.iter_mut().enumerate() {
+            *datum = {
                 let offset = i % a.dim[0] + (i / a.dim[0]) * a.dim[0] * a.dim[1];
                 let mut r:T = Default::default();
                 for j in 0..a.dim[1] {
-                    r = r + res[offset.clone() + j * a.dim[0]].clone();
+                    r = r + res[offset + j * a.dim[0]].clone();
                 }
                 r
             };
         }
-        return Matrix { data, size: Matrix::<T>::size_init(&dim), dim };
+        Matrix { data, size: Matrix::<T>::size_init(&dim), dim }
     }
 }

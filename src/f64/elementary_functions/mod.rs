@@ -2,34 +2,34 @@ type Matrix = super::super::Matrix<f64>;
 
 impl Matrix {
     pub fn sin(&self) -> Matrix{
-        let mut res = Matrix::zeros(self.dim.clone());
-        for i in 0..res.data.len() {
-            res.data[i] = self.data[i].sin();
+        let mut data = self.data.clone();
+        for i in &mut data {
+            *i = i.sin();
         }
-        return res;
+        Matrix{data, dim: self.dim.clone(), size: self.size}
     }
 
     pub fn cos(&self) -> Matrix{
-        let mut res = Matrix::zeros(self.dim.clone());
-        for i in 0..res.data.len() {
-            res.data[i] = self.data[i].cos();
+        let mut data = self.data.clone();
+        for i in &mut data {
+            *i = i.cos();
         }
-        return res;
+        Matrix{data, dim: self.dim.clone(), size: self.size}
     }
 
     pub fn tan(&self) -> Matrix{
-        let mut res = Matrix::zeros(self.dim.clone());
-        for i in 0..res.data.len() {
-            res.data[i] = self.data[i].tan();
+        let mut data = self.data.clone();
+        for i in &mut data {
+            *i = i.tan();
         }
-        return res;
+        Matrix{data, dim: self.dim.clone(), size: self.size}
     }
 
     pub fn function(&self, f: fn(x: f64) -> f64) -> Matrix {
         let mut data = self.data.clone();
-        for i in 0..data.len() {
-            data[i] = f(data[i]);
+        for i in &mut data {
+            *i = f(*i);
         }
-        return Matrix{data, dim: self.dim.clone(), size: self.size.clone()};
+        Matrix{data, dim: self.dim.clone(), size: self.size}
     }
 }
