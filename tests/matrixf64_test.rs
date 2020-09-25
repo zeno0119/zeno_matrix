@@ -78,6 +78,8 @@ mod typed_functions {
 }
 
 mod matrix_ops {
+    use zeno_matrix::Matrix;
+
     type Matrixf64 = super::Matrix<f64>;
     #[test]
     fn dot() {
@@ -131,5 +133,21 @@ mod matrix_ops {
         let t = t.t();
         let a = res.reshape(&[200, 1]);
         assert_eq!(a, t);
+    }
+
+    #[test]
+    fn sum1() {
+        let res = Matrixf64::ones(&[5, 10]);
+        let r = res.sum(1);
+        let ten = Matrixf64::ones(&[5, 1]) * Matrixf64::mat(10.0);
+        assert_eq!(r, ten)
+    }
+
+    #[test]
+    fn sum2() {
+        let res = Matrixf64::ones(&[5, 10]);
+        let r = res.sum(0);
+        let ten = Matrixf64::ones(&[1, 10]) * Matrixf64::mat(5.0);
+        assert_eq!(r, ten)
     }
 }

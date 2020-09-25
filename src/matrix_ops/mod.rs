@@ -1,3 +1,4 @@
+
 type Matrix<T> = super::Matrix<T>;
 
 impl<T: std::clone::Clone> super::Matrix<T> {
@@ -61,5 +62,34 @@ impl<T: std::clone::Clone> super::Matrix<T> {
             };
         }
         Matrix { data, size: Matrix::<T>::size_init(&dim), dim }
+    }
+
+    pub fn sum(&self, axis: usize) -> Matrix<T>
+    where T: std::ops::Add<Output = T> + std::default::Default
+    {
+        if axis >= self.dim.len() { panic!("axis number is larger than dimension") }
+
+        let mut dim = self.dim.to_vec();
+        dim[axis] = 1;
+        let mut data: Vec<T> = vec![Default::default(); Matrix::<T>::size_init(&dim)];
+        let increment = {
+            if axis == 0{ 1 }
+            else {self.dim[0]}
+        };
+        let offset = {
+            if axis == 1 { 1 }
+            else {self.dim[0]}
+        };
+        for (i, datum) in data.iter_mut().enumerate() {
+            *datum = {
+                let mut r: T = Default::default();
+                for j in 0..self.dim[axis] {
+                    println!("{:}", j * increment + i * offset);
+                    r = r + self.data[j * increment + i * offset].to_owned();
+                }
+                r
+            };
+        }
+        Matrix{data, size: Matrix::<T>::size_init(&dim), dim}
     }
 }
