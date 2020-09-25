@@ -84,7 +84,7 @@ impl<T: std::clone::Clone> super::Matrix<T> {
             *datum = {
                 let mut r: T = Default::default();
                 for j in 0..self.dim[axis] {
-                    println!("{:}", j * increment + i * offset);
+                    //println!("{:}", j * increment + i * offset);
                     r = r + self.data[j * increment + i * offset].to_owned();
                 }
                 r
