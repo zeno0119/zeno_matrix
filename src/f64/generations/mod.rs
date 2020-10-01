@@ -38,7 +38,7 @@ impl Matrix {
         let mut data = vec![0.0; size];
         let mut rng = rand::thread_rng();
         for i in &mut data {
-            *i = (rng.gen::<f64>() + start) / (1.0 + start) * end;
+            *i = rng.gen::<f64>() * (end - start) + start;
         }
         Matrix{size, data, dim: d.to_owned()}
     }
