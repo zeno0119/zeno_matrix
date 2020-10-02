@@ -152,3 +152,28 @@ mod matrix_ops {
         assert_eq!(r, ten)
     }
 }
+
+mod random {
+    type Matrixf64 = super::Matrix<f64>;
+
+    #[test]
+    fn extract() {
+        let res = Matrixf64::linspace(0.0, 2.0, 201);
+        assert_eq!(res.extract(10).size(), 10);
+        println!("{:?}", res.extract(10));
+    }
+
+    #[test]
+    #[should_panic(expected = "matrix size is smaller than n")]
+    fn extract_panic() {
+        let res = Matrixf64::linspace(0.0, 2.0, 201);
+        res.extract(1000);
+    }
+
+    #[test]
+    fn select() {
+        let res = Matrixf64::linspace(0.0, 2.0, 201);
+        assert_eq!(res.select(300).size(), 300);
+        println!("{:?}", res.select(300))
+    }
+}

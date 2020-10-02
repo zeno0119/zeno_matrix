@@ -1,3 +1,4 @@
+mod random;
 mod f64;
 mod i32;
 
