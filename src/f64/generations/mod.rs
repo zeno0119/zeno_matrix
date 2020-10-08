@@ -42,8 +42,4 @@ impl Matrix {
         }
         Matrix{size, data, dim: d.to_owned()}
     }
-
-    pub fn mat(f: f64) -> Matrix{
-        Matrix{data: vec![f], dim: vec![1], size: 1}
-    }
 }
